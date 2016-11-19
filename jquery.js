@@ -274,7 +274,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 	return target;
 };
 
-jQuery.extend( {
+jQuery.extend( { //这些函数基本是工具函数
 
 	// Unique for each copy of jQuery on the page
 	expando: "jQuery" + ( version + Math.random() ).replace( /\D/g, "" ),
@@ -345,15 +345,15 @@ jQuery.extend( {
 		return true;
 	},
 
-	type: function( obj ) {
-		if ( obj == null ) {
+	type: function( obj ) {  
+		if ( obj == null ) { //如果是null
 			return obj + "";
 		}
 
 		// Support: Android <=2.3 only (functionish RegExp)
-		return typeof obj === "object" || typeof obj === "function" ?
-			class2type[ toString.call( obj ) ] || "object" :
-			typeof obj;
+		return typeof obj === "object" || typeof obj === "function" ? 
+			class2type[ toString.call( obj ) ] || "object" ://如果是object或者function
+			typeof obj; //否则 直接返回obj
 	},
 
 	// Evaluates a script in a global context
@@ -372,10 +372,10 @@ jQuery.extend( {
 		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 	},
 
-	each: function( obj, callback ) {
+	each: function( obj, callback ) { //jQuery类方法，对类数组对象可以操作
 		var length, i = 0;
 
-		if ( isArrayLike( obj ) ) {
+		if ( isArrayLike( obj ) ) {//对类数组对象可以操作
 			length = obj.length;
 			for ( ; i < length; i++ ) {
 				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
@@ -383,7 +383,7 @@ jQuery.extend( {
 				}
 			}
 		} else {
-			for ( i in obj ) {
+			for ( i in obj ) { //对象操作
 				if ( callback.call( obj[ i ], i, obj[ i ] ) === false ) {
 					break;
 				}
@@ -535,7 +535,9 @@ if ( typeof Symbol === "function" ) {
 // Populate the class2type map
 jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
 function( i, name ) {
-	class2type[ "[object " + name + "]" ] = name.toLowerCase();
+	class2type[ "[object " + name + "]" ] = name.toLowerCase();//class2type在最前面被声明{}
+	//通过此函数，可以用与jQuery.type配合，区分函数类型
+	//例子:class2type[ "[object  Object ]" ] = 'object' ;class2type[ "[object  Array]"] = 'array'
 } );
 
 function isArrayLike( obj ) {
@@ -10201,18 +10203,18 @@ if ( typeof define === "function" && define.amd ) {
 var
 
 	// Map over jQuery in case of overwrite
-	_jQuery = window.jQuery,
+	_jQuery = window.jQuery, //用于存放在JQuery初始化之前的同名函数，用于noConflict恢复
 
 	// Map over the $ in case of overwrite
-	_$ = window.$;
+	_$ = window.$;//用于存放在$初始化之前的同名函数，用于noConflict恢复
 
 jQuery.noConflict = function( deep ) {
 	if ( window.$ === jQuery ) {
-		window.$ = _$;
+		window.$ = _$;  //如果deep不为true,则把$恢复，而JQuery不恢复
 	}
 
 	if ( deep && window.jQuery === jQuery ) {
-		window.jQuery = _jQuery;
+		window.jQuery = _jQuery;//如果deep为true,则把JQuery也恢复
 	}
 
 	return jQuery;
