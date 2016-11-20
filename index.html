@@ -3,9 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+  <style type="text/css">
+    .first{
+      background-color: red;
+    }
+    .f2{
+      background-color: green;
+    }
+    .f3{
+      background-color: blue;
+    }
+  </style>
 </head>
 <body>
-<ul class="first">
+<ul class="first  f3 f2">
    <li class="foo">list item 1</li>
    <li>list item 2</li>
    <li class="bar">list item 3</li>
@@ -21,21 +32,25 @@
 
 </script>
 <script type="text/javascript">
-window.onload = function(){
-	
-  function type(obj){
-    var typeArray={};
-    ['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object'].forEach(function(val,i){
-      typeArray['[object '+val+']']=val.toLowerCase();
-    });
-    if(obj==null){
-      return 'null';
-    }
-    return typeof obj =='object'||typeof obj =='function'?typeArray[({}).toString.call( obj )]:typeof obj;   
-  }
-
+$(document).ready(function(){
+  function fn1( value ){
+    console.log( value );
+    return false;
 }
-	
+ 
+function fn2( value ){
+    fn1( "fn2 says: " + value );
+    return false;
+}
+ 
+var callbacks = $.Callbacks( "stopOnFalse" );
+callbacks.add( fn1 );
+callbacks.fire( "foo" );
+callbacks.add( fn2 );
+callbacks.fire( "bar" );
+callbacks.remove( fn2 );
+callbacks.fire( "foobar")
+});
 </script>	
 </body>
 </html>

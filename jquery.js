@@ -3239,7 +3239,7 @@ jQuery.each( {
 		return this.pushStack( matched );
 	};
 } );
-var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );
+var rnothtmlwhite = ( /[^\x20\t\r\n\f]+/g );//不是是空格，制表符，回车，换行，换页
 
 
 
