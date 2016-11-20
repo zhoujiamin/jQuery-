@@ -3042,7 +3042,7 @@ var rootjQuery,
 				}
 
 			// HANDLE: $(expr, $(...))
-			} else if ( !context || context.jquery ) {
+			} else if ( !context || context.jquery ) {  //
 				return ( context || root ).find( selector );
 
 			// HANDLE: $(expr, context)
@@ -3051,9 +3051,9 @@ var rootjQuery,
 				return this.constructor( context ).find( selector );
 			}
 
-		// HANDLE: $(DOMElement)
+		// HANDLE: $(DOMElement) 处理是DOM的情况
 		} else if ( selector.nodeType ) {
-			this[ 0 ] = selector;
+			this[ 0 ] = selector; //把Dom放到this[0]里，构成类数组对象
 			this.length = 1;
 			return this;
 

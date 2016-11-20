@@ -23,7 +23,16 @@
 <script type="text/javascript">
 window.onload = function(){
 	
-  var a = {}.hasOwnProperty;
+  function type(obj){
+    var typeArray={};
+    ['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'RegExp', 'Object'].forEach(function(val,i){
+      typeArray['[object '+val+']']=val.toLowerCase();
+    });
+    if(obj==null){
+      return 'null';
+    }
+    return typeof obj =='object'||typeof obj =='function'?typeArray[({}).toString.call( obj )]:typeof obj;   
+  }
 
 }
 	
