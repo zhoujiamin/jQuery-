@@ -3280,27 +3280,28 @@ jQuery.Callbacks = function( options ) {
 	// (we check in cache first)
 	options = typeof options === "string" ?
 		createOptions( options ) :
-		jQuery.extend( {}, options );
+		jQuery.extend( {}, options );    
+  //得到的options是一个对象，如{stopOnFalse：true}
 
-	var // Flag to know if list is currently firing
-		firing,
+	var // Flag to know if list is currently firing 回调函数队列是否在执行
+		firing, 
 
-		// Last fire value for non-forgettable lists
+		// Last fire value for non-forgettable lists 上次执行的参数
 		memory,
 
-		// Flag to know if list was already fired
+		// Flag to know if list was already fired 是否已经执行fire过了
 		fired,
 
-		// Flag to prevent firing
+		// Flag to prevent firing   阻止fire
 		locked,
 
-		// Actual callback list
+		// Actual callback list    回调函数数组
 		list = [],
 
-		// Queue of execution data for repeatable lists
+		// Queue of execution data for repeatable lists 重复
 		queue = [],
 
-		// Index of currently firing callback (modified by add/remove as needed)
+		// Index of currently firing callback (modified by add/remove as needed)当前正在回调的函数索引
 		firingIndex = -1,
 
 		// Fire callbacks
@@ -3310,8 +3311,8 @@ jQuery.Callbacks = function( options ) {
 			locked = options.once;
 
 			// Execute callbacks for all pending executions,
-			// respecting firingIndex overrides and runtime changes
-			fired = firing = true;
+			// respecting firingIndex overrides and runtime changes  
+			fired = firing = true;//正在执行回调函数
 			for ( ; queue.length; firingIndex = -1 ) {
 				memory = queue.shift();
 				while ( ++firingIndex < list.length ) {
@@ -3349,6 +3350,7 @@ jQuery.Callbacks = function( options ) {
 		},
 
 		// Actual Callbacks object
+		//要返回的对象
 		self = {
 
 			// Add a callback or a collection of callbacks to the list
@@ -3362,14 +3364,13 @@ jQuery.Callbacks = function( options ) {
 					}
 
 					( function add( args ) {
-						jQuery.each( args, function( _, arg ) {
+						jQuery.each( args, function( _, arg ) {     // _代表index
 							if ( jQuery.isFunction( arg ) ) {
-								if ( !options.unique || !self.has( arg ) ) {
-									list.push( arg );
+								if ( !options.unique || !self.has( arg ) ) {  
+									list.push( arg );////如果options.unique不为true（或者为true，没有重复添加）则添加
 								}
 							} else if ( arg && arg.length && jQuery.type( arg ) !== "string" ) {
-
-								// Inspect recursively
+								// Inspect recursively 如果arg为数组或者类数组
 								add( arg );
 							}
 						} );
@@ -3382,7 +3383,7 @@ jQuery.Callbacks = function( options ) {
 				return this;
 			},
 
-			// Remove a callback from the list
+			// Remove a callback from the list删除某个函数
 			remove: function() {
 				jQuery.each( arguments, function( _, arg ) {
 					var index;
